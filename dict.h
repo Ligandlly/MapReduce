@@ -23,9 +23,8 @@ struct cell
 
 struct row *create_row(char *key);
 struct row *get_row(char *key, struct list_head *head);
-struct cell *create_cell(char*  key, char*  value);
-void add_cell(char *key, char *value,  struct list_head *dict, pthread_mutex_t *global_mutex);
-//void insert_row_by_hash(struct row *row, struct list_head *dict);
+struct cell *create_cell(char *key, char *value);
+void add_cell(char *key, char *value, struct list_head *dict, pthread_mutex_t *global_mutex);
 void display_dict(struct list_head *head);
 
 #endif
