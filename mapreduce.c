@@ -38,7 +38,6 @@ void *map_wrap(void *arg)
 struct reduce_arg
 {
   Reducer reducer;
-  // char *key;
   Getter get_func;
   int partition_number;
 };
@@ -46,11 +45,7 @@ struct reduce_arg
 void *reduce_wrap(void *arg)
 {
   struct reduce_arg *reduce_arg = (struct reduce_arg *)arg;
-  // reduce_arg->reducer(reduce_arg->key, reduce_arg->get_func, reduce_arg->partition_number);
   struct list_head *head = reducer_data_list + reduce_arg->partition_number;
-  // struct list_head *iter;
-  // char *prev_key = "";
-  // __list_for_each(iter, head)
   while (!list_empty(head))
   {
     struct cell *item = list_entry(head->next, struct cell, cell_list);
@@ -78,11 +73,6 @@ char *get_next(char *key, int partition_number)
   {
     return NULL;
   }
-  // struct cell *item = list_entry(current->next, struct cell, cell_list);
-  // while (strcmp(item->key, key) != 0)
-  // {
-  //   item = list_entry(item->cell_list.next, struct cell, cell_list);
-  // }
 
   struct list_head *iter;
   __list_for_each(iter, current)
@@ -131,9 +121,6 @@ void MR_Run(int argc, char *argv[],
   struct reduce_arg reduce_args[num_reducers];
   for (int i = 0; i < num_reducers; ++i)
   {
-    struct list_head *head = reducer_data_list + i;
-    struct list_head *iter;
-
     reduce_args[i].reducer = reduce;
     reduce_args[i].partition_number = i;
     reduce_args[i].get_func = get_next;
